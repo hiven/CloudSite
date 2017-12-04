@@ -1,4 +1,3 @@
-
 let $selectedProduct
 
 var handler = StripeCheckout.configure({
@@ -8,11 +7,9 @@ var handler = StripeCheckout.configure({
 })
 
 function sendToGCF(token) {
-  console.log("$selectedProduct: ", $selectedProduct)
-  // You can access the token ID with `token.id`.
-  // Get the token ID to your server-side code for use.
-
   $.ajax("https://us-central1-stripeexample-187817.cloudfunctions.net/cloudCharge", {
+    crossDomain: true,
+    contentType: "application/json",
     data: {
       token: token.id,
       productId: $selectedProduct.attr('data-product-id'),
@@ -31,17 +28,16 @@ $(".buy-it").click(function(e) {
 
   $selectedProduct = $(this)
 
-  sendToGCF({ id: "tok_amex" })
+  // sendToGCF({ id: "tok_amex" })
 
-  // const price = $selectedProduct.attr("data-price")
+  const price = $selectedProduct.attr("data-price")
 
   // Open Checkout with further options:
-  // handler.open({
-  //   name: 'Demo Site',
-  //   description: '2 widgets',
-  //   amount: price,
-  // })
-  
+  handler.open({
+    name: 'Demo Site',
+    description: '2 widgets',
+    amount: price,
+  })
 
   e.preventDefault()
 })

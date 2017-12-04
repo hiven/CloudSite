@@ -6,27 +6,21 @@ const ds = Datastore({
 })
 
 exports.cloudCharge = function cloudCharge(req, res) {
+  console.log("req: ", req)
   console.log("req.method: ", req.method)
+
   // set JSON content type and CORS headers for the response
   res.header('Content-Type', 'application/json')
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Content-Type')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
 
-  // // respond to CORS preflight requests
-  // if (req.method === 'OPTIONS') {
-  //   res.status(204).send()
-  // }
-
-  // if (req.method === `OPTIONS`) {
-  //   res.set('Access-Control-Allow-Origin', "*")
-  //     .set('Access-Control-Allow-Methods', 'GET, POST')
-  //     .status(200)
-  //   return
-  // }
+  // respond to CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(204).send()
+  }
 
   const { token, productId } = req.body
-
-  console.log("req.body: ", req.body)
 
   console.log("token: ", token)
   console.log("productId: ", productId)
