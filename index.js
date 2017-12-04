@@ -6,12 +6,26 @@ const ds = Datastore({
 })
 
 exports.cloudCharge = function cloudCharge(req, res) {
-  const { token = "tok_visa", productId = 5639445604728832 } = req.body
+  console.log("req: ", req)
+  console.log("req.method: ", req.method)
+
+  // set JSON content type and CORS headers for the response
+  res.header('Content-Type', 'application/json')
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+
+  // respond to CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(204).send()
+  }
+
+  const { token, productId } = req.body
 
   console.log("token: ", token)
   console.log("productId: ", productId)
 
-  const key = ds.key(["product", productId])
+  const key = ds.key(["product", parseInt(productId, 10)])
   ds.get(key, (err, product) => {
     stripe.charges.create({
       amount: product.price,
@@ -19,11 +33,6 @@ exports.cloudCharge = function cloudCharge(req, res) {
       source: token,
       description: `GIFs of ${product.set}`,
     }, (err, charge) => {
-      // set JSON content type and CORS headers for the response
-      res.header('Content-Type', 'application/json')
-      res.header('Access-Control-Allow-Origin', '*')
-      res.header('Access-Control-Allow-Headers', 'Content-Type')
-
       res.status(200).send(charge)
     })
   })
