@@ -27,9 +27,7 @@ $(".buy-it").click(function(e) {
   console.log("buying something")
 
   $selectedProduct = $(this)
-
-  // sendToGCF({ id: "tok_amex" })
-
+  
   const price = $selectedProduct.attr("data-price")
 
   // Open Checkout with further options:
