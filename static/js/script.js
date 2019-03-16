@@ -8,6 +8,7 @@ var handler = StripeCheckout.configure({
 
 function sendToGCF(token) {
   $.ajax("https://us-central1-stripeexample-187817.cloudfunctions.net/cloudCharge", {
+    type: post,
     crossDomain: true,
     contentType: "application/json",
     data: {
