@@ -20,6 +20,7 @@ exports.chargeCustomer = app.post("/", function chargeCustomer (req,res){
     if(err) {
       return res.send(JSON.stringify(err));
     }
-    res.send(JSON.stringify(charge));
+    //res.send(JSON.stringify(charge));
+    res.status(303).redirect(`https://ngrok.io/thanks.html?charge=${charge.id}`)
   });
 });
