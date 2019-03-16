@@ -23,7 +23,7 @@ exports.chargeCustomer = app.post("/", function chargeCustomer (req,res){
       res.status(500).send(err)  
     }
     //res.send(JSON.stringify(charge));
-    console.error(charge);
+    console.log(charge);
     res.status(303).redirect(`https://ngrok.io/thanks.html?charge=${charge.id}`)
   });
 });
