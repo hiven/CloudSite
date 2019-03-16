@@ -18,9 +18,12 @@ exports.chargeCustomer = app.post("/", function chargeCustomer (req,res){
     amount:999
   },function(err, charge) {
     if(err) {
-      return res.send(JSON.stringify(err));
+      //return res.send(JSON.stringify(err));
+      console.error(err);
+      res.status(500).send(err)  
     }
     //res.send(JSON.stringify(charge));
+    console.error(charge);
     res.status(303).redirect(`https://ngrok.io/thanks.html?charge=${charge.id}`)
   });
 });
